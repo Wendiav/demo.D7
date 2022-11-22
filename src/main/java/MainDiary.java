@@ -30,12 +30,13 @@ public class MainDiary {
 
     /**
      * metod för skapa anteckningar till min dagbok
-     * @throws IOException
-     * användaren kan ange titel
-     * användaren kan skriva inlägg till dagbok
-     * det aktuella datumet skrivs automatiskt
+     *
+     * @return
+     * @throws IOException användaren kan ange titel
+     *                     användaren kan skriva inlägg till dagbok
+     *                     det aktuella datumet skrivs automatiskt
      */
-    public static void createNewEntry() throws IOException {
+    public static Entry createNewEntry() throws IOException {
         Entry entry = new Entry();
         List<Entry> journalEntries = new ArrayList<>();
 
@@ -58,6 +59,7 @@ public class MainDiary {
         journalEntries.add(newEntry);
         mapper.writeValue(path.toFile(), journalEntries);
 
+        return entry;
     }
 
 
@@ -81,6 +83,17 @@ public class MainDiary {
             System.out.println(e);
             System.out.println("Dagbooken är tom!");
         }
+    }
+
+    /**
+     * Denna metod kommer att spara publikationerna i JSON-fil
+     * @throws IOException
+     */
+    public static void saveEntriesToJSON() throws IOException {
+        journalEntries = List.of(mapper.readValue(path.toFile(), Entry[].class));
+        List<Entry> entries = new ArrayList<>(journalEntries);
+        entries.add(createNewEntry());
+        mapper.writeValue(path.toFile(), entries);
     }
 
     /**

@@ -18,7 +18,7 @@ public class MainMenu {
                     break;
 
                 case 2:
-                    MainDiary.createNewEntry();
+                    MainDiary.saveEntriesToJSON();
                     break;
 
                 case 3:
